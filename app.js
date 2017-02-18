@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./connection.json');
 var signup = require('./routes/signup');
+var updateprofile = require('./routes/updateprofile');
 
 //เรียกใช้ mysql เชื่อมต่อกับฐานข้อมูล
 var mysql = require('mysql');
@@ -30,6 +31,7 @@ app.use(function(req, res, next) {
 })
 
 app.use('/signup', signup);
+app.use('/updateprofile', updateprofile);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

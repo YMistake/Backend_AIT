@@ -23,7 +23,7 @@ router.post('/', function(req,res,next){
   Role: req.body.role
   }
 
-  connection.query('insert into student set ?', data, function(err, result){console.log(result)})
+  connection.query('insert into startup set ?', data, function(err, result){console.log(result)})
   // if (data.role == "student"){
   //   connection.query('insert into student set ?', data, function(err, result){})
   // } else if (data.role == "teacher"){
