@@ -31,3 +31,4 @@ router.post('/', function(req, res, next){
   connection.query('insert into student set ?', data, function(err, result){})
 
 })
+module.exports = router;
