@@ -32,11 +32,4 @@ router.post('/', function(req,res,done){
         }})
 			})
 
-// router.post('/', passport.authenticate('local-signup', {
-// 		failureRedirect : '/signup', // redirect back to the signup page if there is an error
-// 		failureFlash : true // allow flash messages
-// 	}));
-
-
-
 module.exports = router;
