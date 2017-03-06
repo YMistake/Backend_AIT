@@ -6,15 +6,16 @@ var connection = mysql.createConnection(config);
 // var passport = require('passport');
 
 router.post('/', function(req,res,done){
-  connection.query("SELECT * FROM startup WHERE Username = ?",req.body.user, function(err, rows) {
-      if (err)
-          return done(err);
-      if (rows.length) {
-          res.send({"report": "0"});
-      } else {
+  // connection.query("SELECT * FROM startup WHERE Username = ?",req.body.user, function(err, rows) {
+  //     if (err)
+  //         return done(err);
+  //     if (rows.length) {
+  //         res.send({"report": "0"});
+  //     } else {
           var data = {
-          Username: req.body.user,
-          Password: req.body.pass,
+          Id: req.body.id,
+          // Username: req.body.user,
+          // Password: req.body.pass,
           Firstname: req.body.first,
           Lastname: req.body.last,
           email: req.body.email,
@@ -29,7 +30,7 @@ router.post('/', function(req,res,done){
 							res.send({"report": "1"});
 						}
           })
-        }})
+        // }})
 			})
 
 module.exports = router;

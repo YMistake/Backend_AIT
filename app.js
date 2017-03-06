@@ -10,7 +10,7 @@ var config = require('./connection.json');
 var signup = require('./routes/signup');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
-var home = require('./routes/home')
+var home = require('./routes/home');
 
 require('./config/passport')(passport);
 
@@ -39,6 +39,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs'); // มันต้องตั้งเป็นอะไร งง !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 app.use(function(req, res, next) {
@@ -51,7 +52,7 @@ app.use(function(req, res, next) {
 app.use('/signup', signup);
 app.use('/updateprofile', updateprofile);
 app.use('/login', login);
-app.use('/login/home' home);
+app.use('/login/home', home);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
