@@ -8,6 +8,7 @@ var connection = mysql.createConnection(config);
 router.post('/', function(req, res, next){
 
   var data = {
+    Id: req.body.id,
     AcademicYear: req.body.AcademicYear,
     Major: req.body.Major,
     SPosition: req.body.SPosition,
@@ -22,10 +23,24 @@ router.post('/', function(req, res, next){
     SpvTel: req.body.SpvTel
   }
 
-  var query = connection.query('insert into student set ?', data, function(err, result){
-    console.log(result);
-    console.log(query.sql);
+  connection.query('SELECT Id from student where Id = ?', req.body.id,function(err,rows){
+    if(err)
+      return done(err);
+      console.log(err);
+    if(rows.length){
+      var query = connection.query('update student set ?', data);
+      console.log(query.sql);
+    } else {
+      var query = connection.query('insert into student set ?', data);
+      console.log(query.sql);
+    }
   })
+
+
+  // var query = connection.query('insert into student set ?', data, function(err, result){
+  //   console.log(result);
+  //   console.log(query.sql);
+  // })
 
 })
 module.exports = router;

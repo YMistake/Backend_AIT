@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./connection.json');
 var signup = require('./routes/signup');
+var review = require('./routes/review');
+var record = require('./routes/record');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
 var home = require('./routes/home');
@@ -53,6 +55,8 @@ app.use('/signup', signup);
 app.use('/updateprofile', updateprofile);
 app.use('/login', login);
 app.use('/login/home', home);
+app.use('/review', review);
+app.use('/record', record);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
