@@ -19,7 +19,8 @@ router.post('/', function(req,res,done){
           Firstname: req.body.first,
           Lastname: req.body.last,
           email: req.body.email,
-          Role: req.body.role
+          Role: req.body.role,
+          picture: req.body.picture
           }
 					console.log(req.body.first);
           var query = connection.query('insert into startup set ?',data, function(err, result){

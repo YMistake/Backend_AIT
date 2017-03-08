@@ -10,6 +10,9 @@ var config = require('./connection.json');
 var signup = require('./routes/signup');
 var review = require('./routes/review');
 var record = require('./routes/record');
+var CStudent = require('./routes/CStudent');
+var SInformation = require('./routes/SInformation');
+var company = require('./routes/company');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
 var home = require('./routes/home');
@@ -57,6 +60,9 @@ app.use('/login', login);
 app.use('/login/home', home);
 app.use('/review', review);
 app.use('/record', record);
+app.use('/record/company', company);
+app.use('/record/company/student', CStudent);
+app.use('/record/company/student/information', SInformation);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
