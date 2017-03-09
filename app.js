@@ -12,6 +12,7 @@ var review = require('./routes/review');
 var record = require('./routes/record');
 var CStudent = require('./routes/CStudent');
 var SInformation = require('./routes/SInformation');
+var scn = require('./routes/scn');
 var company = require('./routes/company');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
@@ -45,7 +46,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs'); // มันต้องตั้งเป็นอะไร งง !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.set('view engine', 'hbs'); // มันต้องตั้งเป็นอะไร งง !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -63,6 +64,7 @@ app.use('/record', record);
 app.use('/record/company', company);
 app.use('/record/company/student', CStudent);
 app.use('/record/company/student/information', SInformation);
+app.use('/sent-company', scn);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

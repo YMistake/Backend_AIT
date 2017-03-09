@@ -11,6 +11,7 @@ router.post('/', function(req, res, next){
     Id: req.body.id,
     AcademicYear: req.body.AcademicYear,
     Major: req.body.Major,
+    SId: req.body.SId,
     SPosition: req.body.SPosition,
     STel: req.body.STel,
     SFacebook: req.body.SFacebook,
