@@ -8,15 +8,18 @@ var connection = mysql.createConnection(config);
 
 
 router.post('/', function(req,res,done){
+  console.log(req.body.id);
   connection.query("SELECT * from startup WHERE Id = ?",req.body.id, function(err,rows){
     if(err)
       return done(err);
+    console.log(rows);
     if(rows.length){
+      console.log(rows);
       connection.query("SELECT picture from startup WHERE picture = ?",req.body.picture, function(err,rows){
         if(err)
           return done(err);
         if(!rows.length){
-          connection.query("update startup set 'picture' = ?",req.body.picture, function(err){
+          connection.query("update startup set 'picture' = ? where Id = ?",[req.body.picture,req.body.id], function(err){
             return done(err);
           });
         }

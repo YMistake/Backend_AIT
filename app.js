@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./connection.json');
 var signup = require('./routes/signup');
+var signupCompany = require('./routes/signup-company');
+var signupCompany2 = require('./routes/signup-company2');
 var review = require('./routes/review');
 var record = require('./routes/record');
 var CStudent = require('./routes/CStudent');
@@ -16,6 +18,7 @@ var scn = require('./routes/scn');
 var company = require('./routes/company');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
+var admin_login = require('./routes/admin-login');
 var home = require('./routes/home');
 
 require('./config/passport')(passport);
@@ -65,6 +68,9 @@ app.use('/record/company', company);
 app.use('/record/company/student', CStudent);
 app.use('/record/company/student/information', SInformation);
 app.use('/sent-company', scn);
+app.use('/admin-login', admin_login);
+app.use('/signup-company', signupCompany);
+app.use('/signup-company2', signupCompany2);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

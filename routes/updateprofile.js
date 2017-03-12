@@ -29,7 +29,7 @@ router.post('/', function(req, res, next){
       return done(err);
       console.log(err);
     if(rows.length){
-      var query = connection.query('update student set ?', data);
+      var query = connection.query('update student set ? where Id = ?', [data,data.Id]);
       console.log(query.sql);
     } else {
       var query = connection.query('insert into student set ?', data);

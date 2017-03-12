@@ -41,7 +41,7 @@ router.post('/', function(req, res, next){
       throw err;
     }
     if(rows.length){
-      var query = connection.query('update company set ?', data2, function(err){
+      var query = connection.query('update company set ? where CName = ?', [data2,data2.CName], function(err){
         if(err){
           console.log(err);
           throw err;
