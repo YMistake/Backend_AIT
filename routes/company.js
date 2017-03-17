@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
-router.post('/', function(req, res, next){
+router.post('/', function(req, res){
 
-  var query = connection.query('SELECT distinct CName from student WHERE AcademicYear = ?',req.body.year, function(err, rows){
+  var query = connection.query('SELECT distinct CName from company WHERE AcademicYear = ? ORDER BY CName DESC',req.body.year, function(err, rows){
     console.log(err);
     console.log(rows);
 

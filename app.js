@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var logger = require('morgan');
 var session  = require('express-session');
-var passport = require('passport');
-var flash    = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var config = require('./connection.json');
+
 var signup = require('./routes/signup');
 var signupCompany = require('./routes/signup-company');
 var signupCompany2 = require('./routes/signup-company2');
@@ -20,8 +20,11 @@ var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
 var admin_login = require('./routes/admin-login');
 var home = require('./routes/home');
-
-require('./config/passport')(passport);
+var student_for_company = require('./routes/student-for-company');
+var company_assesment = require('./routes/company-assesment');
+var assign_company1 = require('./routes/assignCompany1');
+// var tea_upprofile = require('./routes/tea_upprofile');
+var select_company = require('./routes/select-company');
 
 //เรียกใช้ mysql เชื่อมต่อกับฐานข้อมูล
 var mysql = require('mysql');
@@ -46,8 +49,6 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'hbs'); // มันต้องตั้งเป็นอะไร งง !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -71,6 +72,11 @@ app.use('/sent-company', scn);
 app.use('/admin-login', admin_login);
 app.use('/signup-company', signupCompany);
 app.use('/signup-company2', signupCompany2);
+app.use('/student-for-company', student_for_company);
+app.use('/student-for-company/company-assesment', company_assesment);
+app.use('/assign_company', assign_company1);
+// app.use('/teacher-updateprofile', tea_upprofile);
+app.use('/assign_company/select_company', select_company);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -13,7 +13,7 @@ router.post('/', function(req, res, done){
     CName: req.body.CName
   };
 
-  connection.query("SELECT * from startup WHERE Id = ?",req.body.id, function(err, rows) {
+  connection.query("SELECT * from supervisor WHERE Id = ?",req.body.id, function(err, rows) {
     if(err)
       return done(err);
     if(rows.length) {

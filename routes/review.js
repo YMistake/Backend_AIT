@@ -29,11 +29,6 @@ router.post('/', function(req, res, done){
       console.log(query.sql);
     }
   })
-  // var query = connection.query('insert into review set ?', data, function(err, result){
-  //   console.log(result);
-  //   console.log(err);
-  //   console.log(query.sql);
-  // })
 
 })
 module.exports = router;
