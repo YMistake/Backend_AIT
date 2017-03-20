@@ -25,6 +25,9 @@ var company_assesment = require('./routes/company-assesment');
 var assign_company1 = require('./routes/assignCompany1');
 // var tea_upprofile = require('./routes/tea_upprofile');
 var select_company = require('./routes/select-company');
+var teacher_supervision = require('./routes/teacher_supervision');
+var teacher_supervision_company = require('./routes/teacher_supervision_company');
+var teacher_supervision_company_assesment = require('./routes/teacher_supervision_company_assesment');
 
 //เรียกใช้ mysql เชื่อมต่อกับฐานข้อมูล
 var mysql = require('mysql');
@@ -77,6 +80,9 @@ app.use('/student-for-company/company-assesment', company_assesment);
 app.use('/assign_company', assign_company1);
 // app.use('/teacher-updateprofile', tea_upprofile);
 app.use('/assign_company/select_company', select_company);
+app.use('/teacher_supervision', teacher_supervision);
+app.use('/teacher_supervision/company', teacher_supervision_company);
+app.use('/teacher_supervision/company/Assesment', teacher_supervision_company_assesment);
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
