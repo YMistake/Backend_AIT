@@ -7,8 +7,8 @@ var connection = mysql.createConnection(config);
 
 router.get('/', function(req, res){
 
-  connection.query('SELECT distinct AcademicYear from student ORDER BY AcademicYear DESC', function(err, rows){
-    res.send({year: rows});
+  connection.query('SELECT distinct CName from sent_company ORDER BY CName ASC', function(err, rows){
+    res.send({data: rows});
   })
 
 })

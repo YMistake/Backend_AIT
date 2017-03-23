@@ -15,6 +15,7 @@ var record = require('./routes/record');
 var CStudent = require('./routes/CStudent');
 var SInformation = require('./routes/SInformation');
 var scn = require('./routes/scn');
+var scn2 = require('./routes/scn2');
 var company = require('./routes/company');
 var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
@@ -28,6 +29,12 @@ var select_company = require('./routes/select-company');
 var teacher_supervision = require('./routes/teacher_supervision');
 var teacher_supervision_company = require('./routes/teacher_supervision_company');
 var teacher_supervision_company_assesment = require('./routes/teacher_supervision_company_assesment');
+var news = require('./routes/news');
+var approve = require('./routes/approve');
+var confirm = require('./routes/approve_confirm');
+var confirm_yes = require('./routes/approve_confirm_yes');
+var confirm_no = require('./routes/approve_confirm_no');
+
 
 //เรียกใช้ mysql เชื่อมต่อกับฐานข้อมูล
 var mysql = require('mysql');
@@ -72,6 +79,7 @@ app.use('/record/company', company);
 app.use('/record/company/student', CStudent);
 app.use('/record/company/student/information', SInformation);
 app.use('/sent-company', scn);
+app.use('/sent-company-check', scn2);
 app.use('/admin-login', admin_login);
 app.use('/signup-company', signupCompany);
 app.use('/signup-company2', signupCompany2);
@@ -83,6 +91,13 @@ app.use('/assign_company/select_company', select_company);
 app.use('/teacher_supervision', teacher_supervision);
 app.use('/teacher_supervision/company', teacher_supervision_company);
 app.use('/teacher_supervision/company/Assesment', teacher_supervision_company_assesment);
+app.use('/news', news);
+app.use('/home', home);
+app.use('/approve', approve);
+app.use('/approve/confirm', confirm);
+app.use('/approve/confirm/yes', confirm_yes);
+app.use('/approve/confirm/no', confirm_no);
+
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
