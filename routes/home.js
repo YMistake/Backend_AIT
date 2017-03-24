@@ -17,7 +17,7 @@ router.post('/', function(req, res) {
 
   role = req.body.role;
   if(role == "student"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and student = 1',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and student = 1 ORDER by PostDay desc',year, function(err,rows){
       if(err){
         console.log(err);
         throw err;
@@ -26,7 +26,7 @@ router.post('/', function(req, res) {
       }
     })
   } else if (role == "teacher"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and teacher = 1',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and teacher = 1 ORDER by PostDay desc',year, function(err,rows){
       if(err){
         console.log(err);
         throw err;
@@ -35,7 +35,7 @@ router.post('/', function(req, res) {
       }
     })
   } else if (role == "company"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and company = 1',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and company = 1 ORDER by PostDay desc',year, function(err,rows){
       if(err){
         console.log(err);
         throw err;
