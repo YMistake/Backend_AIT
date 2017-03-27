@@ -22,8 +22,13 @@ router.post('/', function(req, res){
       console.log(err);
       throw err;
     } else {
-      res.send(rows)
-      console.log(rows);
+      if(rows.length){
+        data = rows[0].Status;
+        res.send({data: data});
+      }else {
+        res.send({data: 4})
+      }
+
     }
   })
 

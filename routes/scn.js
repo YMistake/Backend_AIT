@@ -49,7 +49,8 @@ router.post('/', function(req, res){
     Submitter: req.body.id,
     AcademicYear: year,
     CName: req.body.CompanyName,
-    Status: 1
+    Status: 1,
+    img: req.body.img
   }
 
   connection.query('SELECT Submitter from approve_status WHERE Submitter = ?', req.body.id, function(err,rows){

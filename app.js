@@ -24,7 +24,6 @@ var home = require('./routes/home');
 var student_for_company = require('./routes/student-for-company');
 var company_assesment = require('./routes/company-assesment');
 var assign_company1 = require('./routes/assignCompany1');
-// var tea_upprofile = require('./routes/tea_upprofile');
 var select_company = require('./routes/select-company');
 var teacher_supervision = require('./routes/teacher_supervision');
 var teacher_supervision_company = require('./routes/teacher_supervision_company');
@@ -53,7 +52,7 @@ connection.connect(function(err, results) {
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({limit: '20mb', extended: true }));
 app.use(session({
   secret: 'aitalwaysrunning',
   resave: true,
@@ -86,7 +85,6 @@ app.use('/signup-company2', signupCompany2);
 app.use('/student-for-company', student_for_company);
 app.use('/student-for-company/company-assesment', company_assesment);
 app.use('/assign_company', assign_company1);
-// app.use('/teacher-updateprofile', tea_upprofile);
 app.use('/assign_company/select_company', select_company);
 app.use('/teacher_supervision', teacher_supervision);
 app.use('/teacher_supervision/company', teacher_supervision_company);
