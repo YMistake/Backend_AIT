@@ -6,9 +6,19 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
-  console.log(req.body);
+  var d = new Date();
+  var year = d.getFullYear() + 543;
+  var month = d.getMonth();
+
+  if (month >= 7){
+    year = year;
+  } else {
+    year = year-1;
+  }
+
   var data = {
     Id: req.body.id,
+    AcademicYear: year,
     CName: req.body.CName,
     _1: req.body._1,
     _2: req.body._2,
@@ -32,7 +42,7 @@ router.post('/', function(req, res){
     _20: req.body._20,
     Opinion: req.body.Opinion
   }
-  connection.query('SELECT Id from teacher_assesment where Id = ?', req.body.id, function(err,rows){
+  connection.query('SELECT Id from teacher_assesment where Id = ? and AcademicYear = ?', [req.body.id,year], function(err,rows){
     if(err){
       console.log(err);
       throw err;

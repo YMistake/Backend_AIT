@@ -7,7 +7,7 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
 
-        connection.query('SELECT sent_company.SId,Firstname,Lastname,Major,CAddress,CTel from startup left join (student,sent_company) on (startup.Id = student.Id and student.SId = sent_company.SId) where sent_company.CName = ?',req.body.CName,function(err,rows){
+        connection.query('SELECT sent_company.SId,Firstname,Lastname,Major,sent_company.CAddress,sent_company.CTel from startup left join (student,sent_company) on (startup.Id = student.Id and student.SId = sent_company.SId) where sent_company.CName = ?',req.body.CName,function(err,rows){
           if(err){
             console.log(err);
             throw err;

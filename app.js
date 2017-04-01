@@ -4,7 +4,7 @@ var logger = require('morgan');
 var session  = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var path = require('path');
 var config = require('./connection.json');
 
 var signup = require('./routes/signup');
@@ -21,6 +21,7 @@ var updateprofile = require('./routes/updateprofile');
 var login = require('./routes/login');
 var admin_login = require('./routes/admin-login');
 var home = require('./routes/home');
+var dashboard = require('./routes/dashboard');
 var student_for_company = require('./routes/student-for-company');
 var company_assesment = require('./routes/company-assesment');
 var assign_company1 = require('./routes/assignCompany1');
@@ -33,6 +34,8 @@ var approve = require('./routes/approve');
 var confirm = require('./routes/approve_confirm');
 var confirm_yes = require('./routes/approve_confirm_yes');
 var confirm_no = require('./routes/approve_confirm_no');
+var upload = require('./routes/upload');
+var download_dir = require('./routes/download_dir');
 
 
 //เรียกใช้ mysql เชื่อมต่อกับฐานข้อมูล
@@ -91,11 +94,14 @@ app.use('/teacher_supervision/company', teacher_supervision_company);
 app.use('/teacher_supervision/company/Assesment', teacher_supervision_company_assesment);
 app.use('/news', news);
 app.use('/home', home);
+app.use('/dashboard', dashboard);
 app.use('/approve', approve);
 app.use('/approve/confirm', confirm);
 app.use('/approve/confirm/yes', confirm_yes);
 app.use('/approve/confirm/no', confirm_no);
-
+app.use('/upload/', upload);
+app.use('/download_dir', download_dir);
+app.use('/download', express.static(path.join(__dirname, 'FileStorage')));
 
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

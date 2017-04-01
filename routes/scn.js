@@ -32,7 +32,9 @@ router.post('/', function(req, res){
           var data = {
             Submitter: req.body.id,
             SId: req.body.list[i],
-            CName: req.body.CompanyName
+            CName: req.body.CompanyName,
+            CAddress: req.body.CompanyAddress,
+            CTel: req.body.CompanyTel
           }
             connection.query('insert into sent_company set ?', data, function(err,rows){
               if (err){
@@ -62,6 +64,8 @@ router.post('/', function(req, res){
         if(err){
           console.log(err);
           throw err;
+        } else {
+          res.send({report: "1"})
         }
       })
     } else {
@@ -69,6 +73,8 @@ router.post('/', function(req, res){
         if (err){
           console.log(err);
           throw err;
+        } else {
+          res.send({report: "1"})
         }
       })
     }

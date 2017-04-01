@@ -5,17 +5,17 @@ var bodyParser = require('body-parser');
 var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
-router.get('/',function(req, res){
+router.get('/',function(req,res){
+  var d = new Date();
+  var year = d.getFullYear() + 543;
+  var month = d.getMonth();
 
-    var d = new Date();
-    var year = d.getFullYear() + 543;
-    var month = d.getMonth();
+  if (month >= 7){
+    res.send({year: year})
+  } else {
+    res.send({year: year-1})
+  }
 
-    if (month >= 7){
-      res.send({year: year})
-    } else {
-      res.send({year: year-1})
-    }
 })
 
 router.post('/', function(req, res){
@@ -47,7 +47,7 @@ router.post('/', function(req, res){
   connection.query('SELECT Id from student where Id = ?', req.body.id,function(err,rows){
     if(err){
       console.log(err);
-      return done(err);
+      throw err;
     } else {
       if(rows.length){
         var query = connection.query('update student set ? where Id = ?', [data,data.Id]);
@@ -57,12 +57,12 @@ router.post('/', function(req, res){
         console.log(query.sql);
       }
     }
-
   })
+
   connection.query('SELECT 1 from company where AcademicYear = ? AND CTel = ?', [data2.AcademicYear,data2.CTel], function(err,rows){
     if(err){
       console.log(err);
-      return done(err);
+      throw err;
     } else {
       if(rows.length){
         var query = connection.query('update company set ? where AcademicYear = ? AND CTel = ?', [data2,data2.AcademicYear,data2.CTel]);
@@ -73,6 +73,8 @@ router.post('/', function(req, res){
       }
     }
   })
+
+  connection.query('update startup set Firstname = ? , Lastname = ? , email = ? where Id = ?', [req.body.Firstname,req.body.Lastname,req.body.email,req.body.id]);
 
 })
 module.exports = router;
