@@ -62,7 +62,7 @@ app.use(session({
   saveUninitialized: true
 }));
 app.set('views', __dirname + '/views');
-app.set('view engine', 'hbs'); // มันต้องตั้งเป็นอะไร งง !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.set('view engine', 'hbs');
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -70,7 +70,7 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
   next();
 })
-// require('./routes/routes.js');
+//เมื่อ request มาที่ไหน ให้ไปทำอะไร
 app.use('/signup', signup);
 app.use('/updateprofile', updateprofile);
 app.use('/login', login);
