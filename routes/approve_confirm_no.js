@@ -6,12 +6,12 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
-  connection.query('SELECT 1 from approve_status where CName = ?', req.body.CName, function(err,rows){
+  connection.query('SELECT 1 from ApproveStatus where CompanyName = ?', req.body.CompanyName, function(err,rows){
     if(err){
       console.log(err);
       throw err;
     } else if(rows.length) {
-      connection.query('update approve_status set Status = 3 where CName = ?',req.body.CName,function(err,name){
+      connection.query('update ApproveStatus set Status = 3 where CompanyName = ?',req.body.CompanyName,function(err,name){
         if(err){
           console.log(err);
           throw err;
@@ -21,7 +21,6 @@ router.post('/', function(req, res){
       })
     }
   })
-  connection.query('DELETE from sent_company where CName = ?', req.body.CName);
 
 })
 module.exports = router;

@@ -7,10 +7,14 @@ var connection = mysql.createConnection(config);
 
 router.get('/', function(req, res){
 
-  var query = connection.query('SELECT Id,Firstname,Lastname,picture from startup where Role = "teacher"', function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.send({teacher: rows});
+  connection.query('SELECT ID,Firstname,Lastname,Picture from Startup where Role = "teacher"', function(err, rows){
+    if(err){
+      console.log(err);
+      throw err;
+    } else {
+      res.send({teacher: rows});      
+    }
+
   })
 
 })

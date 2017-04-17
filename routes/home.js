@@ -5,19 +5,10 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res) {
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
 
   role = req.body.role;
   if(role == "student"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and student = 1 ORDER by PostDay desc',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDate,"+00:00","+07:00") as PostDate,News from Announcement where ToStudent = 1 ORDER by PostDate desc', function(err,rows){
       if(err){
         console.log(err);
         throw err;
@@ -26,7 +17,7 @@ router.post('/', function(req, res) {
       }
     })
   } else if (role == "teacher"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and teacher = 1 ORDER by PostDay desc',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDate,"+00:00","+07:00") as PostDate,News from Announcement where ToTeacher = 1 ORDER by PostDate desc', function(err,rows){
       if(err){
         console.log(err);
         throw err;
@@ -35,7 +26,7 @@ router.post('/', function(req, res) {
       }
     })
   } else if (role == "company"){
-    connection.query('SELECT CONVERT_TZ(PostDay,"+00:00","+07:00") as PostDay,News from news where AcademicYear = ? and company = 1 ORDER by PostDay desc',year, function(err,rows){
+    connection.query('SELECT CONVERT_TZ(PostDate,"+00:00","+07:00") as PostDate,News from Announcement where ToCompany = 1 ORDER by PostDate desc', function(err,rows){
       if(err){
         console.log(err);
         throw err;

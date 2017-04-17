@@ -6,20 +6,10 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
 
   var data = {
-    Id: req.body.id,
-    AcademicYear: year,
-    CName: req.body.CName,
+    ID: req.body.id,
+    Assesser: req.body.Assesser,
     _1: req.body._1,
     _2: req.body._2,
     _3: req.body._3,
@@ -42,12 +32,12 @@ router.post('/', function(req, res){
     _20: req.body._20,
     Opinion: req.body.Opinion
   }
-  connection.query('SELECT Id from teacher_assesment where Id = ? and AcademicYear = ?', [req.body.id,year], function(err,rows){
+  connection.query('SELECT 1 from TeacherAssessment where ID = ?', req.body.id, function(err,rows){
     if(err){
       console.log(err);
       throw err;
     } else if (rows.length) {
-      connection.query('update teacher_assesment set ? where Id = ?',[data,data.Id],function(err){
+      connection.query('update TeacherAssessment set ? where ID = ?',[data,data.ID],function(err){
         if(err){
           console.log(err);
           throw err;
@@ -56,7 +46,7 @@ router.post('/', function(req, res){
         }
       })
     } else if (!rows.length) {
-      connection.query('insert into teacher_assesment set ?',data,function(err){
+      connection.query('insert into TeacherAssessment set ?',data,function(err){
         if(err){
           console.log(err);
           throw err;

@@ -7,27 +7,17 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
   console.log(req.body);
-  var postday = new Date();
-  var year = postday.getFullYear() + 543;
-  var month = postday.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
+  var postdate = new Date();
 
   var data = {
-    AcademicYear: year,
-    PostDay:  postday,
+    PostDate:  postdate,
     News: req.body.news,
-    student: req.body.student,
-    teacher: req.body.teacher,
-    company: req.body.company
+    ToStudent: req.body.student,
+    ToTeacher: req.body.teacher,
+    ToCompany: req.body.company
   }
 
-  connection.query('insert into news set ?', data, function(err,rows){
-    console.log(postday);
+  connection.query('insert into Announcement set ?', data, function(err,rows){
     if (err){
       console.log(err);
       throw err;
@@ -66,13 +56,51 @@ router.post('/', function(req, res){
 
   req.write(JSON.stringify(data));
   req.end();
-};
+  };
 
-var message = {
-  app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
-  contents: {"en": "มีข่าวใหม่"},
-  included_segments: ["All"]
-};
+  if(req.body.student == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับนักศึกษา"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.teacher == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับอาจารย์นิเทศก์"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.company == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับสถานประกอบการ"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.student == 1 && req.body.teacher == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับนักศึกษาและอาจารย์นิเทศก์"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.student == 1 && req.body.company == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับนักศึกษาและสถานประกอบการ"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.teacher == 1 && req.body.company == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับอาจารย์นิเทศก์และสถานประกอบการ"},
+      included_segments: ["All"]
+    };
+  } else if (req.body.student == 1 && req.body.teacher == 1 && req.body.company == 1){
+    var message = {
+      app_id: "0ed8eb32-4000-4f4b-9217-3475c32fcbb5",
+      contents: {"en": "[ข่าวใหม่]สำหรับผู้มีส่วนเกี่ยวข้องกับการฝึกงานอุตสาหกรรม"},
+      included_segments: ["All"]
+    };
+  }
 
 sendNotification(message);
 })

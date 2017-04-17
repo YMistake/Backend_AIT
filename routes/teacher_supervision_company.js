@@ -7,36 +7,30 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
 
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
-
-  connection.query('SELECT CAddress,CTel,SpvName,SpvPosition,SpvTel from student where CName = ? AND AcademicYear = ?',[req.body.CName,year], function(err, company){
-    console.log(year);
-
-
+  connection.query('SELECT CompanyAddress,CompanyTels from Company where CompanyName = ?',req.body.CompanyName, function(err, company){
     if (err){
       console.log(err);
       throw err;
     } else{
-      connection.query('SELECT startup.Id,Firstname,Lastname,picture,CName,SPosition,STel from startup left join student on (startup.Id = student.Id) where CName = ?',req.body.CName,function(err,student){
-        if (err){
+      connection.query('Select Firstname,Lastname,Position,Tel from Startup left join Supervisor on (Startup.ID = Supervisor.ID) where CompanyName = ?',req.body.CompanyName,function(err,spv){
+        if(err){
           console.log(err);
           throw err;
         } else {
-          res.send({CData: company ,SData: student});
+          connection.query('Select Startup.ID,Firstname,Lastname,Picture,Facebook,Line,Major,Tel from Startup left join (Student,ApproveStatus) on (Startup.ID = Student.ID and Student.SID=ApproveStatus.SID) where CompanyName = ?',req.body.CompanyName, function(err,std){
+            if(err){
+              console.log(err);
+              throw err;
+            } else {
+              console.log("CData - "+company);
+              console.log("SpvData - "+ spv);
+              console.log("StdData - "+ std);
+              res.send({CData: company, SpvData: spv, StdData: std})
+            }
+          })
         }
       })
     }
   })
-
-
-
 })
 module.exports = router;

@@ -5,20 +5,22 @@ var bodyParser = require('body-parser');
 var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
-router.post('/', function(req, res){
-  connection.query('SELECT 1 from ApproveStatus where CompanyName = ?', req.body.CompanyName, function(err,rows){
+router.get('/', function(req, res){
+  connection.query('SELECT year from Admin where Indexs = 1',function(err,year){
     if(err){
       console.log(err);
       throw err;
-    } else if(rows.length) {
-      connection.query('update ApproveStatus set Status = 2 where CompanyName = ?',req.body.CompanyName,function(err,name){
+    } else {
+      connection.query('SELECT distinct CompanyName from ApproveStatus left join Student on (ApproveStatus.SID=Student.SID) where AcademicYear = ? and Status = 2',year[0].year,function(err,rows){
         if(err){
           console.log(err);
           throw err;
         } else {
-          res.send({report: 1});
+          res.send({data: rows});
+          console.log(rows);
         }
       })
+
     }
   })
 

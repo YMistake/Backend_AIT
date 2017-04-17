@@ -7,51 +7,36 @@ var connection = mysql.createConnection(config);
 
 router.get('/', function(req, res){
 
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
-
-  var query = connection.query('SELECT CName from company WHERE AcademicYear = ?',year, function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.send({company: rows});
-  })
-})
-
-router.post('/', function(req, res){
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    year = year;
-  } else {
-    year = year-1;
-  }
-
-  connection.query('SELECT Id from teacher WHERE Id = ? AND AcademicYear = ?', [req.body.id,year], function(err,rows){
+  connection.query('SELECT year from Admin where Indexs = 1', function(err,year){
     if(err){
       console.log(err);
       throw err;
     } else {
-      connection.query('delete from teacher where Id = ? AND AcademicYear = ?', [req.body.id,year], function(err){
+      connection.query('SELECT distinct CompanyName from ApproveStatus inner join Student on (ApproveStatus.SID = Student.SID) where Status = 2 AND AcademicYear = ?', year[0].year, function(err,rows){
+        res.send({company: rows});
+      })
+    }
+  })
+})
+
+router.post('/', function(req, res){
+
+  connection.query('SELECT 1 from TeacherAssignment WHERE ID = ?', req.body.id, function(err,rows){
+    if(err){
+      console.log(err);
+      throw err;
+    } else if(rows.length) {
+      connection.query('delete from TeacherAssignment where ID = ?', req.body.id, function(err){
         if(err){
           console.log(err);
           throw err;
         } else {
           for (var i =0, len = req.body.company.length; i < len; i++){
             var data = {
-              Id: req.body.id,
-              AcademicYear: year,
-              company: req.body.company[i]
+              ID: req.body.id,
+              CompanyName: req.body.company[i]
             }
-              connection.query('insert into teacher set ?', data, function(err,rows){
+              connection.query('insert into TeacherAssignment set ?', data, function(err,rows){
                 if (err){
                   console.log(err);
                   throw err;
@@ -61,6 +46,21 @@ router.post('/', function(req, res){
           res.send({"report": "1"});
         }
       })
+    } else {
+      for (var i =0, len = req.body.company.length; i < len; i++){
+        var data = {
+          ID: req.body.id,
+          CompanyName: req.body.company[i]
+        }
+          connection.query('insert into TeacherAssignment set ?', data, function(err,rows){
+            if (err){
+              console.log(err);
+              throw err;
+            }
+            console.log("Do it");
+          })
+      }
+      res.send({"report": "1"});
     }
   })
 

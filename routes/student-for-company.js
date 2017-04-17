@@ -6,29 +6,30 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
-  var date = new Date();
-  var year = date.getFullYear() + 542;
-  var CName;
+
   console.log(req.body.id);
-  connection.query('SELECT CName FROM supervisor WHERE Id = ?', req.body.id, function(err,cname){
-    console.log("cname = " + cname);
+  connection.query('SELECT year from Admin where Indexs = 1',function(err,year){
     if(err){
       console.log(err);
       throw err;
     } else {
-      CName = cname[0].CName;
-      console.log(CName);
-      console.log(year);
-      connection.query('SELECT student.Id,picture,CName,Firstname,Lastname,Major,STel FROM student inner join startup on (startup.Id=student.Id) WHERE AcademicYear = ? AND CName = ?',[year,CName], function(err,rows){
-        console.log(rows);
+      connection.query('SELECT CompanyName FROM Supervisor WHERE ID = ?', req.body.id, function(err,cname){
         if(err){
           console.log(err);
           throw err;
         } else {
-          res.send({data: rows})
+          connection.query('SELECT Student.ID,Picture,Firstname,Lastname,Major,Tel FROM Student left join (Startup,ApproveStatus) on (Startup.ID=Student.ID and Student.SID=ApproveStatus.SID) WHERE AcademicYear = ? AND CompanyName = ?',[year[0].year,cname[0].CompanyName], function(err,rows){
+            if(err){
+              console.log(err);
+              throw err;
+            } else {
+              res.send({data: rows})
+            }
+          });
         }
-      });
+      })
     }
   })
+
 })
 module.exports = router;

@@ -7,7 +7,7 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
 
-  var query = connection.query('SELECT distinct CName from company WHERE AcademicYear = ? ORDER BY CName DESC',req.body.year, function(err, rows){
+  var query = connection.query('SELECT distinct CompanyName from ApproveStatus left join Student on (ApproveStatus.SID = Student.SID) WHERE AcademicYear = ? ORDER BY CompanyName DESC',req.body.year, function(err, rows){
     console.log(err);
     console.log(rows);
 

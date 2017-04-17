@@ -5,76 +5,69 @@ var bodyParser = require('body-parser');
 var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
-router.get('/',function(req,res){
-  var d = new Date();
-  var year = d.getFullYear() + 543;
-  var month = d.getMonth();
-
-  if (month >= 7){
-    res.send({year: year})
-  } else {
-    res.send({year: year-1})
-  }
-
-})
-
 router.post('/', function(req, res){
 
   var data = {
-    Id: req.body.id,
+    ID: req.body.id,
     AcademicYear: req.body.AcademicYear,
     Major: req.body.Major,
-    SId: req.body.SId,
-    SPosition: req.body.SPosition,
-    STel: req.body.STel,
-    SFacebook: req.body.SFacebook,
-    SLine: req.body.SLine,
-    CName: req.body.CName,
-    CAddress: req.body.CAddress,
-    CTel: req.body.CTel,
-    SpvName: req.body.SpvName,
-    SpvPosition: req.body.SpvPosition,
-    SpvTel: req.body.SpvTel
+    SID: req.body.SID,
+    Tel: req.body.Tel,
+    Facebook: req.body.Facebook,
+    Line: req.body.Line,
   }
 
   var data2 = {
-    AcademicYear: req.body.AcademicYear,
-    CName: req.body.CName,
-    CAddress: req.body.CAddress,
-    CTel: req.body.CTel
+    ID: req.body.id,
+    Firstname: req.body.firstname,
+    Lastname: req.body.lastname,
+    Email: req.body.email,
+    Picture: req.body.picture,
+    Role: req.body.role
   }
 
-  connection.query('SELECT Id from student where Id = ?', req.body.id,function(err,rows){
+  connection.query('SELECT 1 from Student where ID = ?', data.ID,function(err,rows){
     if(err){
       console.log(err);
       throw err;
     } else {
       if(rows.length){
-        var query = connection.query('update student set ? where Id = ?', [data,data.Id]);
+        var query = connection.query('update Student set ? where ID = ?', [data,data.ID]);
         console.log(query.sql);
       } else {
-        var query = connection.query('insert into student set ?', data);
+        var query = connection.query('insert into Student set ?', data);
         console.log(query.sql);
       }
     }
   })
 
-  connection.query('SELECT 1 from company where AcademicYear = ? AND CTel = ?', [data2.AcademicYear,data2.CTel], function(err,rows){
+  connection.query('SELECT 1 from Startup where ID = ?', data2.ID, function(err,rows){
     if(err){
       console.log(err);
       throw err;
     } else {
       if(rows.length){
-        var query = connection.query('update company set ? where AcademicYear = ? AND CTel = ?', [data2,data2.AcademicYear,data2.CTel]);
-        console.log(query.sql);
+        var query = connection.query('update Startup set ? where ID = ?', [data2,data2.ID],function(err){
+          if(err){
+            console.log(err);
+            throw err;
+          } else {
+            res.send({report: 1});
+          }
+        });
       } else {
-        var query = connection.query('insert into company set ?', data2);
-        console.log(query.sql);
+        var query = connection.query('insert into Startup set ?', data2,function(err){
+          if(err){
+            console.log(err);
+            throw err;
+          } else {
+            res.send({report: 1});
+          }
+        });
+
       }
     }
   })
-
-  connection.query('update startup set Firstname = ? , Lastname = ? , email = ? where Id = ?', [req.body.Firstname,req.body.Lastname,req.body.email,req.body.id]);
 
 })
 module.exports = router;

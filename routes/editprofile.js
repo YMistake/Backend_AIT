@@ -5,11 +5,16 @@ var bodyParser = require('body-parser');
 var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
-router.get('/', function(req, res){
-
-  connection.query('SELECT distinct CompanyName from ApproveStatus where Status = 1 ORDER BY CompanyName ASC', function(err, rows){
-    res.send({data: rows});
+router.post('/', function(req,res){
+  console.log(req.body.id);
+  connection.query('SELECT * from Student where ID = ?',req.body.id, function(err,rows){
+    if(err){
+      console.log(err);
+      throw err;
+    } else {
+      res.send({data: rows[0]})
+    }
   })
-
 })
+
 module.exports = router;
