@@ -8,7 +8,7 @@ var connection = mysql.createConnection(config);
 router.post('/', function(req, res){
 
 
-  connection.query('SELECT CompanyName from TeacherAssignment where ID = ?',req.body.id, function(err, rows){
+  connection.query('SELECT TeacherAssignment.CID,CompanyName from TeacherAssignment left join Company on (TeacherAssignment.CID = Company.CID) where ID = ?',req.body.id, function(err, rows){
     if (err){
       console.log(err);
       throw err;

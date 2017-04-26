@@ -6,12 +6,8 @@ var config = require('../connection.json');
 var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
-  connection.query('SELECT 1 from ApproveStatus where CompanyName = ?', req.body.CompanyName, function(err,rows){
-    if(err){
-      console.log(err);
-      throw err;
-    } else if(rows.length) {
-      connection.query('update ApproveStatus set Status = 2 where CompanyName = ?',req.body.CompanyName,function(err,name){
+
+      connection.query('update ApproveStatus set Status = 2 where CID = ?',req.body.CID,function(err,name){
         if(err){
           console.log(err);
           throw err;
@@ -19,8 +15,6 @@ router.post('/', function(req, res){
           res.send({report: 1});
         }
       })
-    }
-  })
 
 })
 module.exports = router;

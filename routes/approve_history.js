@@ -11,13 +11,19 @@ router.get('/', function(req, res){
       console.log(err);
       throw err;
     } else {
-      connection.query('SELECT distinct CompanyName from ApproveStatus left join Student on (ApproveStatus.SID=Student.SID) where AcademicYear = ? and Status = 2',year[0].year,function(err,rows){
+      connection.query('SELECT distinct CompanyName,ApproveStatus.CID,Submitter from ApproveStatus left join (Student, Company) on (ApproveStatus.SID=Student.SID and ApproveStatus.CID=Company.CID) where AcademicYear = ? and Status = 2',year[0].year,function(err,approve){
         if(err){
           console.log(err);
           throw err;
         } else {
-          res.send({data: rows});
-          console.log(rows);
+          connection.query('SELECT distinct CompanyName,ApproveStatus.CID,Submitter from ApproveStatus left join (Student, Company) on (ApproveStatus.SID=Student.SID and ApproveStatus.CID=Company.CID) where AcademicYear = ? and Status = 3',year[0].year,function(err,disapprove){
+            if(err){
+              console.log(err);
+              throw err;
+            } else {
+              res.send({approve: approve, disapprove: disapprove});
+            }
+          });
         }
       })
 

@@ -13,12 +13,12 @@ router.post('/', function(req, res){
       console.log(err);
       throw err;
     } else {
-      connection.query('SELECT CompanyName FROM Supervisor WHERE ID = ?', req.body.id, function(err,cname){
+      connection.query('SELECT CID FROM Supervisor WHERE ID = ?', req.body.id, function(err,cid){
         if(err){
           console.log(err);
           throw err;
         } else {
-          connection.query('SELECT Student.ID,Picture,Firstname,Lastname,Major,Tel FROM Student left join (Startup,ApproveStatus) on (Startup.ID=Student.ID and Student.SID=ApproveStatus.SID) WHERE AcademicYear = ? AND CompanyName = ?',[year[0].year,cname[0].CompanyName], function(err,rows){
+          connection.query('SELECT Student.ID,Picture,Firstname,Lastname,Major,Tel FROM Student left join (Startup,ApproveStatus) on (Startup.ID=Student.ID and Student.SID=ApproveStatus.SID) WHERE AcademicYear = ? AND CID = ?',[year[0].year,cid[0].CID], function(err,rows){
             if(err){
               console.log(err);
               throw err;

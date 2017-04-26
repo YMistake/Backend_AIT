@@ -26,21 +26,6 @@ router.post('/', function(req, res){
     Role: req.body.role
   }
 
-  connection.query('SELECT 1 from Student where ID = ?', data.ID,function(err,rows){
-    if(err){
-      console.log(err);
-      throw err;
-    } else {
-      if(rows.length){
-        var query = connection.query('update Student set ? where ID = ?', [data,data.ID]);
-        console.log(query.sql);
-      } else {
-        var query = connection.query('insert into Student set ?', data);
-        console.log(query.sql);
-      }
-    }
-  })
-
   connection.query('SELECT 1 from Startup where ID = ?', data2.ID, function(err,rows){
     if(err){
       console.log(err);
@@ -68,6 +53,23 @@ router.post('/', function(req, res){
       }
     }
   })
+
+
+  connection.query('SELECT 1 from Student where ID = ?', data.ID,function(err,rows){
+    if(err){
+      console.log(err);
+      throw err;
+    } else {
+      if(rows.length){
+        var query = connection.query('update Student set ? where ID = ?', [data,data.ID]);
+        console.log(query.sql);
+      } else {
+        var query = connection.query('insert into Student set ?', data);
+        console.log(query.sql);
+      }
+    }
+  })
+
 
 })
 module.exports = router;

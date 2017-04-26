@@ -18,7 +18,7 @@ router.post('/', function(req, res){
 
   var data2 = {
     ID: req.body.id,
-    CompanyName: req.body.CompanyName,
+    CID: req.body.CID,
     Position: req.body.Position,
     Tel: req.body.Tel
   };
@@ -56,17 +56,19 @@ router.post('/', function(req, res){
           if(err){
             console.log(error);
             throw err;
+          } else {
+            res.send({"report": "1"});
           }
         });
-        res.send({"report": "1"});
       } else {
         connection.query("insert into Supervisor set ?",data2, function(err){
           if(err){
             console.log(err);
             throw err;
+          } else {
+            res.send({"report": "1"});
           }
         });
-        res.send({"report": "1"});
       }
     }
   })

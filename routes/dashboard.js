@@ -34,10 +34,6 @@ router.get('/', function(req, res) {
                         console.log(err);
                         throw err;
                       } else {
-                        console.log(num);
-                        console.log(com);
-                        console.log(telecom);
-                        console.log(elec);
                         res.send({num: num, com: com, telecom: telecom, elec: elec, year: year})
                       }
                     })

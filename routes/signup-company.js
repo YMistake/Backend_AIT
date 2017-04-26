@@ -12,7 +12,7 @@ router.post('/', function(req, res){
       console.log(err);
       throw err;
     } else {
-      connection.query('SELECT distinct CompanyName from ApproveStatus left join Student on ApproveStatus.SID = Student.SID where Status = 2 and AcademicYear = ?',year[0].year, function(err, rows){
+      connection.query('SELECT distinct ApproveStatus.CID,CompanyName from ApproveStatus left join (Student , Company) on (ApproveStatus.SID = Student.SID and ApproveStatus.CID=Company.CID) where Status = 2 and AcademicYear = ?',year[0].year, function(err, rows){
         res.send({company: rows});
       })
     }

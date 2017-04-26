@@ -7,10 +7,13 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
 
-  var query = connection.query('SELECT distinct Startup.ID,Firstname,Lastname,Picture,Recommend from Startup left join (Student, Review, ApproveStatus) on (Startup.ID=Student.ID and Startup.ID=Review.ID and Student.SID=ApproveStatus.SID) WHERE CompanyName = ? and AcademicYear = ?',[req.body.company,req.body.year], function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.send({data: rows});
+  connection.query('SELECT distinct Startup.ID,Firstname,Lastname,Picture,Recommend from Startup left join (Student, Review, ApproveStatus) on (Startup.ID=Student.ID and Startup.ID=Review.ID and Student.SID=ApproveStatus.SID) WHERE CID = ? and AcademicYear = ?',[req.body.CID,req.body.year], function(err, rows){
+    if(err){
+      console.log(err);
+      throw err;
+    } else {
+      res.send({data: rows});
+    }
   })
 
 })

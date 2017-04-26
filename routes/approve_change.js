@@ -7,7 +7,7 @@ var connection = mysql.createConnection(config);
 
 router.post('/', function(req, res){
 
-        connection.query('SELECT Submitter,ApproveStatus.SID,Firstname,Lastname,Major,CompanyAddress,CompanyTels from Company left join (Startup , Student , ApproveStatus) on (Startup.ID = Student.ID AND Student.SID = ApproveStatus.SID AND ApproveStatus.CID = Company.CID) where Company.CID = ? and Status = 1',req.body.CID,function(err,rows){
+        connection.query('SELECT Submitter,ApproveStatus.SID,Firstname,Lastname,Major,CompanyAddress,CompanyTels from Company left join (Startup , Student , ApproveStatus) on (Startup.ID = Student.ID AND Student.SID = ApproveStatus.SID AND ApproveStatus.CID = Company.CID) where Company.CID = ? and Status = 2',req.body.CID,function(err,rows){
           if(err){
             console.log(err);
             throw err;
@@ -27,7 +27,7 @@ router.post('/', function(req, res){
                     var base64Data2 = base64Data.replace(/[\s\r\n]/g,"+");
                     var base64Image = "data:image/jpeg;base64," + base64Data2
                     res.send({data: rows, img: base64Image, SFirstname: submitter[0].Firstname, SLastname: submitter[0].Lastname});
-                    console.log(submitter[0]);
+                    console.log(rows);
                   }
                 })
               }

@@ -27,21 +27,5 @@ router.post('/', function(req, res){
       })
     }
   })
-  //
-  // connection.query('SELECT Status from approve_status where Submitter = ? and AcademicYear = ?', [req.body.id, year], function(err,rows){
-  //   if (err){
-  //     console.log(err);
-  //     throw err;
-  //   } else {
-  //     if(rows.length){
-  //       data = rows[0].Status;
-  //       res.send({data: data});
-  //     }else {
-  //       res.send({data: 4})
-  //     }
-  //
-  //   }
-  // })
-
 })
 module.exports = router;

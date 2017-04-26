@@ -23,6 +23,8 @@ router.post('/', function(req, res, done){
         if(err){
           console.log(err);
           throw err;
+        } else {
+          res.send({report: 1});
         }
       });
     } else {
@@ -30,6 +32,8 @@ router.post('/', function(req, res, done){
         if(err){
           console.log(err);
           throw err;
+        } else {
+          res.send({report: 1})
         }
       });
     }
