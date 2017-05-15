@@ -19,7 +19,7 @@ router.post('/', function(req, res, done){
       console.log(err);
       throw err;
     } else if(rows.length){
-      connection.query('update Review set ? where ID = ?', [data,data.Id],function(err){
+      connection.query('update Review set ? where ID = ?', [data,data.ID],function(err){
         if(err){
           console.log(err);
           throw err;
